@@ -17,13 +17,13 @@ class BookmarksFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_bookmarks,container,false)
+        binding = FragmentBookmarksBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val controller=findNavController()
-        binding.bottommenu.selectedItemId=R.id.allnews
         binding.bottommenu.setOnNavigationItemSelectedListener{
             when(it.itemId){
                 R.id.allnews -> {controller.navigate(R.id.mainPageFragment)}
