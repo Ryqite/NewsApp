@@ -10,7 +10,7 @@ data class NewsItem(
     val id: Int?=null,
     @ColumnInfo(name="name")
     val name: String,
-    @ColumnInfo(name="name")
+    @ColumnInfo(name="source")
     val source: String,
     @ColumnInfo(name="description")
     val description: String,
