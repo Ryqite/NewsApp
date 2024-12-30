@@ -13,7 +13,6 @@ class MainPage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.mainpage)
-
 //        val nav=findNavController(R.id.fragmentContainerView)
 //        val menu= binding.bottommenu
 //        NavigationUI.setupWithNavController(menu,nav)

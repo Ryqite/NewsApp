@@ -8,11 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.asLiveData
-import androidx.navigation.fragment.findNavController
 import com.example.modsen.DataLayer.NewsItem
 import com.example.modsen.R
 import com.example.modsen.databinding.FragmentDetailPageBinding
-import com.example.modsen.databinding.FragmentMainPageBinding
 
 
 class DetailPageFragment : Fragment() {

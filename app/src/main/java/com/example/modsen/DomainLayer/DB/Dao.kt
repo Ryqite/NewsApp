@@ -1,4 +1,4 @@
-package com.example.modsen.DomainLayer
+package com.example.modsen.DomainLayer.DB
 
 import androidx.room.Dao
 import androidx.room.Delete
