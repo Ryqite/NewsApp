@@ -9,11 +9,14 @@ import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.asLiveData
 import com.example.modsen.DataLayer.NewsItem
+import com.example.modsen.DomainLayer.DB.DataBase
+import com.example.modsen.DomainLayer.ViewModel.NewsViewModel
 import com.example.modsen.R
 import com.example.modsen.databinding.FragmentDetailPageBinding
 
 
 class DetailPageFragment : Fragment() {
+    lateinit var viewModel: NewsViewModel
     lateinit var binding: FragmentDetailPageBinding
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -24,6 +27,8 @@ class DetailPageFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val mainPageActivity = activity as MainPage
+        viewModel=mainPageActivity.viewModel
         val db= DataBase.getDB(requireContext())
         db.getDao().getNewsItems().asLiveData().observe(requireContext() as LifecycleOwner){
             TODO()

@@ -35,12 +35,11 @@
                 android:layout_height="3dp"
                 android:background="?android:attr/listDivider" />
 
-            <ListView
-                android:id="@+id/listView"
+            <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_height="0dp"
                 android:layout_weight="1" />
+
             <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/bottommenu"
                 android:layout_width="match_parent"

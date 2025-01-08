@@ -6,12 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.findNavController
+import com.example.modsen.DomainLayer.ViewModel.NewsViewModel
 import com.example.modsen.R
 import com.example.modsen.databinding.FragmentMainPageBinding
 
 class MainPageFragment : Fragment() {
+    lateinit var viewModel: NewsViewModel
     lateinit var binding: FragmentMainPageBinding
+    //private val viewModel: NewsViewModel by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -23,6 +27,8 @@ class MainPageFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val mainPageActivity = activity as MainPage
+        viewModel=mainPageActivity.viewModel
         val controller=findNavController()
         binding.bottommenu.selectedItemId=R.id.allnews
         binding.bottommenu.setOnNavigationItemSelectedListener{

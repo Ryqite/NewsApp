@@ -1,5 +1,6 @@
 package com.example.modsen.DomainLayer.Adapters
 
+import android.os.strictmode.UntaggedSocketViolation
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,8 +11,11 @@ import com.bumptech.glide.Glide
 import com.example.modsen.DataLayer.Article
 import com.example.modsen.R
 import com.example.modsen.DataLayer.NewsItem
+import com.example.modsen.databinding.NewsItemBinding
+import okhttp3.EventListener
 
 class NewsAdapter: RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
+    private lateinit var binding: NewsItemBinding
     inner class ArticleViewHolder(itemView:View): RecyclerView.ViewHolder(itemView)
     private val differCallback=object : DiffUtil.ItemCallback<Article>(){
         override fun areItemsTheSame(
@@ -46,11 +50,23 @@ class NewsAdapter: RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
     ) {
         val article=differ.currentList[position]
         holder.itemView.apply {
-            Glide.with(this).load(article.urlToImage).into()
+            Glide.with(this).load(article.urlToImage).into(binding.ivArticleImage)
+            binding.tvSource.text=article.source.name
+            binding.tvTitle.text=article.title
+            binding.tvDescription.text=article.description
+            setOnClickListener{
+                TODO()
+                onItemClickListener?.let{it(article)}
+            }
         }
     }
-
     override fun getItemCount(): Int {
+        TODO()
        return differ.currentList.size
+    }
+    private var onItemClickListener: ((Article)-> Unit)? =null
+    fun setOnItemClickListener(listener: (Article)->Unit){
+        TODO()
+        onItemClickListener= listener
     }
 }
