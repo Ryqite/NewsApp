@@ -10,7 +10,7 @@ interface NewsApi {
     @GET("v2/everything")
     suspend fun getAllNews(
         @Query("country")
-        countryCode: String="russia",
+        countryCode: String="ru",
         @Query("page")
         pageNumber:Int=1,
         @Query("apiKey")

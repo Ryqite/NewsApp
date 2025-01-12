@@ -1,6 +1,7 @@
 package com.example.modsen.PresentationLayer
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -22,6 +23,7 @@ class MainPage : AppCompatActivity() {
         val repository= NewsRepository(ArticleDataBase(this))
         val viewModelProviderFactory= NewsViewModelProviderFactory(repository)
         viewModel= ViewModelProvider(this,viewModelProviderFactory)[NewsViewModel::class.java]
+        Log.d("MainPage", "ViewModel initialized: $viewModel")
 //        val nav=findNavController(R.id.fragmentContainerView)
 //        val menu= binding.bottommenu
 //        NavigationUI.setupWithNavController(menu,nav)

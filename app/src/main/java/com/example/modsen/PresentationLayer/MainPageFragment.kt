@@ -1,13 +1,19 @@
 package com.example.modsen.PresentationLayer
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.modsen.DataLayer.Resource
+import com.example.modsen.DataLayer.newsResponse
+import com.example.modsen.DomainLayer.Adapters.NewsAdapter
 import com.example.modsen.DomainLayer.ViewModel.NewsViewModel
 import com.example.modsen.R
 import com.example.modsen.databinding.FragmentMainPageBinding
@@ -15,6 +21,8 @@ import com.example.modsen.databinding.FragmentMainPageBinding
 class MainPageFragment : Fragment() {
     lateinit var viewModel: NewsViewModel
     lateinit var binding: FragmentMainPageBinding
+    lateinit var newsAdapter: NewsAdapter
+    val TAG="MainPageFragment"
     //private val viewModel: NewsViewModel by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,6 +37,24 @@ class MainPageFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val mainPageActivity = activity as MainPage
         viewModel=mainPageActivity.viewModel
+        setupRecyclerView()
+        viewModel.allNews.observe(viewLifecycleOwner, Observer{response->
+            when(response){
+                is Resource.Success->{
+                    response.data?.let { newsResponse->
+                        newsAdapter.differ.submitList(newsResponse.articles)
+                    }
+                }
+                is Resource.Failure->{
+                    response.message?.let{message->
+                        Log.e(TAG,"Error: $message")
+                    }
+                }
+                is Resource.Loading->{
+
+                }
+            }
+        })
         val controller=findNavController()
         binding.bottommenu.selectedItemId=R.id.allnews
         binding.bottommenu.setOnNavigationItemSelectedListener{
@@ -37,6 +63,15 @@ class MainPageFragment : Fragment() {
                 R.id.bookmarks -> {controller.navigate(R.id.bookmarksFragment)}
             }
             true
+        }
+
+    }
+
+    private fun setupRecyclerView(){
+        newsAdapter= NewsAdapter()
+        binding.mainPageRV.apply{
+            adapter=newsAdapter
+            layoutManager= LinearLayoutManager(activity)
         }
     }
 }
