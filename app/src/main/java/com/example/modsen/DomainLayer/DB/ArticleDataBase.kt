@@ -9,20 +9,26 @@ import com.example.modsen.DataLayer.Article
 
 @Database(entities = [Article::class], version = 1)
 @TypeConverters(Converter::class)
-abstract class ArticleDataBase: RoomDatabase() {
+abstract class ArticleDataBase : RoomDatabase() {
     abstract fun getArticleDao(): ArticleDao
-    companion object{
-    @Volatile
-    private var instance: ArticleDataBase?=null
-        private val Lock= Any()
-        operator fun invoke(context: Context)=instance?:synchronized(Lock){
-            instance?: createDatabase(context).also {instance=it}
+
+    companion object {
+        @Volatile
+        private var instance: ArticleDataBase? = null
+        private val LOCK = Any()
+
+        fun getInstance(context: Context): ArticleDataBase {
+            return instance ?: synchronized(LOCK) {
+                instance ?: createDatabase(context).also { instance = it }
+            }
         }
-        private fun createDatabase(context: Context)=
-            Room.databaseBuilder(
+
+        private fun createDatabase(context: Context): ArticleDataBase {
+            return Room.databaseBuilder(
                 context.applicationContext,
                 ArticleDataBase::class.java,
-                "artcile_db.db"
+                "article_db.db" // исправлено название базы
             ).build()
+        }
     }
 }

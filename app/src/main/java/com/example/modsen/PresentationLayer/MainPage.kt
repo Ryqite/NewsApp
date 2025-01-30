@@ -1,7 +1,10 @@
 package com.example.modsen.PresentationLayer
 
+import android.content.Context
 import android.os.Bundle
+import android.util.AttributeSet
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -17,17 +20,20 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainPage : AppCompatActivity() {
     lateinit var viewModel: NewsViewModel
+    lateinit var binding: FragmentMainPageBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.mainpage)
-        val repository= NewsRepository(ArticleDataBase(this))
+        binding = FragmentMainPageBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        val repository= NewsRepository(ArticleDataBase.getInstance(this))
         val viewModelProviderFactory= NewsViewModelProviderFactory(repository)
         viewModel= ViewModelProvider(this,viewModelProviderFactory)[NewsViewModel::class.java]
-        Log.d("MainPage", "ViewModel initialized: $viewModel")
+
 //        val nav=findNavController(R.id.fragmentContainerView)
 //        val menu= binding.bottommenu
 //        NavigationUI.setupWithNavController(menu,nav)
     }
+
 
 //    override fun onSupportNavigateUp(): Boolean {
 //        val controller=findNavController(R.id.fragmentContainerView)

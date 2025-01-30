@@ -6,18 +6,21 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import com.example.modsen.DataLayer.NewsItem
 import com.example.modsen.DomainLayer.DB.DataBase
 import com.example.modsen.DomainLayer.ViewModel.NewsViewModel
 import com.example.modsen.R
 import com.example.modsen.databinding.FragmentDetailPageBinding
+import kotlin.getValue
 
 
 class DetailPageFragment : Fragment() {
-    lateinit var viewModel: NewsViewModel
     lateinit var binding: FragmentDetailPageBinding
+    private val viewModel: NewsViewModel by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -27,14 +30,12 @@ class DetailPageFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val mainPageActivity = activity as MainPage
-        viewModel=mainPageActivity.viewModel
         val db= DataBase.getDB(requireContext())
         db.getDao().getNewsItems().asLiveData().observe(requireContext() as LifecycleOwner){
-            TODO()
+            //
         }
         binding.bookmarksbtn.setOnClickListener{
-            TODO()
+            //
             val newsItem= NewsItem(null,
                 binding.newsItemName.text.toString(),
                 binding.newsItemSource.text.toString(),

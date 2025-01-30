@@ -5,14 +5,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.example.modsen.DomainLayer.ViewModel.NewsViewModel
 import com.example.modsen.R
 import com.example.modsen.databinding.FragmentBookmarksBinding
+import kotlin.getValue
 
 class BookmarksFragment : Fragment() {
-    lateinit var viewModel: NewsViewModel
+    private val viewModel: NewsViewModel by activityViewModels()
     lateinit var binding: FragmentBookmarksBinding
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,15 +28,13 @@ class BookmarksFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val mainPageActivity = activity as MainPage
-        viewModel=mainPageActivity.viewModel
         val controller=findNavController()
-        binding.bottommenu.setOnNavigationItemSelectedListener{
+        binding.bottommenu.setupWithNavController(controller)/*{
             when(it.itemId){
                 R.id.allnews -> {controller.navigate(R.id.mainPageFragment)}
                 R.id.bookmarks -> {controller.navigate(R.id.bookmarksFragment)}
             }
             true
-        }
+        }*/
     }
 }
