@@ -4,6 +4,7 @@ import android.os.strictmode.UntaggedSocketViolation
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -15,7 +16,6 @@ import com.example.modsen.databinding.NewsItemBinding
 import okhttp3.EventListener
 
 class NewsAdapter: RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
-    private lateinit var binding: NewsItemBinding
     inner class ArticleViewHolder(itemView:View): RecyclerView.ViewHolder(itemView)
     private val differCallback=object : DiffUtil.ItemCallback<Article>(){
         override fun areItemsTheSame(
@@ -50,10 +50,13 @@ class NewsAdapter: RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
     ) {
         val article=differ.currentList[position]
         holder.itemView.apply {
-            Glide.with(this).load(article.urlToImage).into(binding.ivArticleImage)
-            binding.tvSource.text=article.source.name
-            binding.tvTitle.text=article.title
-            binding.tvDescription.text=article.description
+            Glide.with(this).load(article.urlToImage).into(findViewById(R.id.ivArticleImage))
+            val source:TextView=findViewById(R.id.tvSource)
+            val title:TextView=findViewById(R.id.tvTitle)
+            val description:TextView=findViewById(R.id.tvDescription)
+            source.text=article.source.name
+            title.text=article.title
+            description.text=article.description
             setOnClickListener{
                 //
                 onItemClickListener?.let{it(article)}

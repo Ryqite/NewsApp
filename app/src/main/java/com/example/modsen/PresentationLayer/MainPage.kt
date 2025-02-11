@@ -16,14 +16,15 @@ import com.example.modsen.DomainLayer.ViewModel.NewsViewModel
 import com.example.modsen.DomainLayer.ViewModel.NewsViewModelProviderFactory
 import com.example.modsen.R
 import com.example.modsen.databinding.FragmentMainPageBinding
+import com.example.modsen.databinding.MainpageBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainPage : AppCompatActivity() {
     lateinit var viewModel: NewsViewModel
-    lateinit var binding: FragmentMainPageBinding
+    lateinit var binding: MainpageBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = FragmentMainPageBinding.inflate(layoutInflater)
+        binding = MainpageBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val repository= NewsRepository(ArticleDataBase.getInstance(this))
         val viewModelProviderFactory= NewsViewModelProviderFactory(repository)

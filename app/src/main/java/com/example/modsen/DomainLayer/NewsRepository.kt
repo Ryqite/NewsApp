@@ -5,5 +5,5 @@ import com.example.modsen.DomainLayer.Retrofit.RetrofitInstance
 
 class NewsRepository(val db: ArticleDataBase) {
     suspend fun getNews(countryCode: String,pageNumber: Int)=
-        RetrofitInstance.api.getAllNews(countryCode,pageNumber)
+        RetrofitInstance.api.getBreakingNews(countryCode,pageNumber)
 }

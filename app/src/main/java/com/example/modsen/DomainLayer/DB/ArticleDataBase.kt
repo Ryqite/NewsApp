@@ -27,7 +27,7 @@ abstract class ArticleDataBase : RoomDatabase() {
             return Room.databaseBuilder(
                 context.applicationContext,
                 ArticleDataBase::class.java,
-                "article_db.db" // исправлено название базы
+                "NewsDB.db" // исправлено название базы
             ).build()
         }
     }

@@ -31,8 +31,7 @@ class MainPageFragment : Fragment(R.layout.fragment_main_page) {
     lateinit var binding: FragmentMainPageBinding
     lateinit var newsAdapter: NewsAdapter
     private val viewModel: NewsViewModel by activityViewModels()
-    val TAG="MainPageFragment"
-    //private val viewModel: NewsViewModel by activityViewModels()
+    val TAG = "MainPageFragment"
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -44,28 +43,33 @@ class MainPageFragment : Fragment(R.layout.fragment_main_page) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        setupRecyclerView()
-        viewModel.allNews.observe(viewLifecycleOwner, Observer{response->
-            when(response){
-                is Resource.Success->{
-                    response.data?.let { newsResponse->
-                        newsAdapter.differ.submitList(newsResponse.articles)
+            setupRecyclerView()
+            viewModel.allNews.observe(viewLifecycleOwner, Observer { response ->
+                when (response) {
+                    is Resource.Success -> {
+                        response.data?.let { newsResponse ->
+                            newsAdapter.differ.submitList(newsResponse.articles)
+                        }
                     }
-                }
-                is Resource.Failure->{
-                    response.message?.let{message->
-                        Log.e(TAG,"Error: АААААААААААААААААААААААААААААААААААААААААААААААААААААААААААА")
+
+                    is Resource.Failure -> {
+                        response.message?.let { message ->
+                            Log.e(
+                                TAG,
+                                "Error: АААААААААААААААААААААААААААААААААААААААААААААААААААААААААААА"
+                            )
+                        }
                     }
-                }
-                is Resource.Loading->{
+
+                    else -> {
+
+                    }
 
                 }
-            }
-        })
-        val controller=findNavController()
-        binding.bottommenu.selectedItemId=R.id.allnews
-        binding.bottommenu.setupWithNavController(controller)/*{
+            })
+            val controller = findNavController()
+            binding.bottommenu.selectedItemId = R.id.allnews
+            binding.bottommenu.setupWithNavController(controller)/*{
             when(it.itemId){
                 R.id.allnews -> {controller.navigate(R.id.mainPageFragment)}
                 R.id.bookmarks -> {controller.navigate(R.id.bookmarksFragment)}
@@ -73,13 +77,11 @@ class MainPageFragment : Fragment(R.layout.fragment_main_page) {
             true
         }*/
 
-    }
-
-    private fun setupRecyclerView(){
-        newsAdapter= NewsAdapter()
-        binding.mainPageRV.apply{
-            adapter=newsAdapter
-            layoutManager= LinearLayoutManager(activity)
         }
+    private fun setupRecyclerView(){
+        newsAdapter = NewsAdapter()
+        binding.mainPageRV.apply {
+            adapter = newsAdapter
+            layoutManager = LinearLayoutManager(activity)}
     }
-}
+    }
