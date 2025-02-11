@@ -44,6 +44,14 @@ class MainPageFragment : Fragment(R.layout.fragment_main_page) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
             setupRecyclerView()
+        newsAdapter.setOnItemClickListener {
+            val bundle= Bundle().apply {
+                putSerializable("article",it)
+            }
+            findNavController().navigate(
+                R.id.action_mainPageFragment_to_detailPageFragment,bundle
+            )
+        }
             viewModel.allNews.observe(viewLifecycleOwner, Observer { response ->
                 when (response) {
                     is Resource.Success -> {

@@ -2,7 +2,9 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     id("kotlin-kapt")
+    id("androidx.navigation.safeargs")
 }
+
 
 android {
     namespace = "com.example.modsen"
@@ -55,7 +57,7 @@ dependencies {
 
     // Coroutine Lifecycle Scopes
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.2.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.7")
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.6.0")
     implementation("com.squareup.retrofit2:converter-gson:2.6.0")
@@ -70,10 +72,10 @@ dependencies {
     // Kotlin Extensions and Coroutines support for Room
     implementation("androidx.room:room-ktx:2.6.1")
     // Navigation Components
-    implementation("androidx.navigation:navigation-fragment-ktx:2.8.5")
-    implementation("androidx.navigation:navigation-ui-ktx:2.8.5")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.8.6")
+    implementation("androidx.navigation:navigation-ui-ktx:2.8.6")
     implementation("androidx.fragment:fragment-ktx:1.5.9")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

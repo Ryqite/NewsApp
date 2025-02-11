@@ -22,12 +22,19 @@
         android:label="fragment_bookmarks"
         tools:layout="@layout/fragment_bookmarks" >
         <action
-            android:id="@+id/action_bookmarksFragment_to_mainPageFragment"
+            android:id="@+id/action_bookmarksFragment_to_detailPageFragment"
+            app:destination="@id/detailPageFragment" />
+        <action
+            android:id="@+id/action_bookmarksFragment_to_mainPageFragment2"
             app:destination="@id/mainPageFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailPageFragment"
         android:name="com.example.modsen.PresentationLayer.DetailPageFragment"
         android:label="fragment_detail_page"
-        tools:layout="@layout/fragment_detail_page" />
+        tools:layout="@layout/fragment_detail_page" >
+        <argument
+            android:name="article"
+            app:argType="com.example.modsen.DataLayer.Article" />
+    </fragment>
 </navigation>
