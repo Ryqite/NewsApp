@@ -1,12 +1,12 @@
 package com.example.modsen.PresentationLayer
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -33,21 +33,18 @@ class BookmarksFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         newsAdapter.setOnItemClickListener {
-            val bundle= Bundle().apply {
-                putSerializable("article",it)
+            val bundle = Bundle().apply {
+                putSerializable("article", it)
             }
             findNavController().navigate(
-                R.id.action_bookmarksFragment_to_detailPageFragment,bundle
+                R.id.action_bookmarksFragment_to_detailPageFragment, bundle
             )
         }
+        viewModel.getBookmarks().observe(viewLifecycleOwner, Observer{articles->
+            newsAdapter.differ.submitList(articles)
+        })
         val controller=findNavController()
-        binding.bottommenu.setupWithNavController(controller)/*{
-            when(it.itemId){
-                R.id.allnews -> {controller.navigate(R.id.mainPageFragment)}
-                R.id.bookmarks -> {controller.navigate(R.id.bookmarksFragment)}
-            }
-            true
-        }*/
+        binding.bottommenu.setupWithNavController(controller)
     }
     private fun setupRecyclerView(){
         newsAdapter = NewsAdapter()

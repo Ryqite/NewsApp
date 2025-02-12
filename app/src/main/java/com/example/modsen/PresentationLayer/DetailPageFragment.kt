@@ -1,23 +1,19 @@
 package com.example.modsen.PresentationLayer
 
-import com.example.modsen.DomainLayer.*
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebViewClient
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.navigation.fragment.navArgs
-import com.example.modsen.DataLayer.NewsItem
 import com.example.modsen.DomainLayer.DB.DataBase
 import com.example.modsen.DomainLayer.ViewModel.NewsViewModel
-import com.example.modsen.R
 import com.example.modsen.databinding.FragmentDetailPageBinding
-import com.example.modsen.databinding.FragmentMainPageBinding
+import com.google.android.material.snackbar.Snackbar
 import kotlin.getValue
 
 
@@ -44,20 +40,23 @@ class DetailPageFragment : Fragment() {
         db.getDao().getNewsItems().asLiveData().observe(requireContext() as LifecycleOwner){
             //
         }
-//        binding.bookmarksbtn.setOnClickListener{
-//            //
-//            val newsItem= NewsItem(null,
-//                binding.newsItemName.text.toString(),
-//                binding.newsItemSource.text.toString(),
-//                binding.newsItemDescription.text.toString())
-//            if(newsItem.isBookmark==false) {
-//                db.getDao().insetNewsItem(newsItem)
-//                newsItem.isBookmark=true
-//            }
-//            else{
-//                db.getDao().deleteNewsItem(newsItem)
-//                newsItem.isBookmark=false
-//            }
-//        }
+        binding.bookmarksbtn.setOnClickListener{
+            if(article.isSaved==false) {
+                viewModel.saveArticle(article)
+                article.isSaved=true
+                Snackbar.make(view,"Article saved", Snackbar.LENGTH_SHORT).show()
+            }
+            else{
+                viewModel.deleteArticle(article)
+                article.isSaved=false
+                Snackbar.make(view,"Article deleted", Snackbar.LENGTH_SHORT).apply {
+                    setAction("Undo") {
+                        viewModel.saveArticle(article)
+                        article.isSaved=true
+                    }
+                    show()
+                }
+            }
+        }
     }
 }

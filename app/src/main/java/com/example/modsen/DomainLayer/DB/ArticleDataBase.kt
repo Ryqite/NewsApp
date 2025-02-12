@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.modsen.DataLayer.Article
 
-@Database(entities = [Article::class], version = 1)
+@Database(entities = [Article::class], version = 2)
 @TypeConverters(Converter::class)
 abstract class ArticleDataBase : RoomDatabase() {
     abstract fun getArticleDao(): ArticleDao

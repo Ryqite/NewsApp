@@ -3,11 +3,11 @@ package com.example.modsen.DomainLayer.ViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.modsen.DataLayer.Article
 import com.example.modsen.DataLayer.Resource
 import com.example.modsen.DataLayer.newsResponse
 import com.example.modsen.DomainLayer.NewsRepository
 import kotlinx.coroutines.launch
-import okhttp3.Response
 
 class NewsViewModel(val newsRepository: NewsRepository): ViewModel() {
     val allNews: MutableLiveData<Resource<newsResponse>> = MutableLiveData()
@@ -28,5 +28,12 @@ class NewsViewModel(val newsRepository: NewsRepository): ViewModel() {
             }
         }
         return Resource.Failure(response.message())
+    }
+    fun saveArticle(article: Article)=viewModelScope.launch{
+        newsRepository.saveArticle(article)
+    }
+    fun getBookmarks()=newsRepository.getBookmarks()
+    fun deleteArticle(article: Article)=viewModelScope.launch{
+        newsRepository.deleteArticle(article)
     }
 }

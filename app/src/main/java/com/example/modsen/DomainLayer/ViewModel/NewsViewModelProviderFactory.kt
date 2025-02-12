@@ -1,9 +1,8 @@
 package com.example.modsen.DomainLayer.ViewModel
 
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.example.modsen.DomainLayer.NewsRepository
-import kotlin.concurrent.thread
 
 class NewsViewModelProviderFactory(
     val newsRepository: NewsRepository

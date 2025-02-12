@@ -1,6 +1,5 @@
 package com.example.modsen.DomainLayer.Adapters
 
-import android.os.strictmode.UntaggedSocketViolation
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,9 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.modsen.DataLayer.Article
 import com.example.modsen.R
-import com.example.modsen.DataLayer.NewsItem
-import com.example.modsen.databinding.NewsItemBinding
-import okhttp3.EventListener
 
 class NewsAdapter: RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
     inner class ArticleViewHolder(itemView:View): RecyclerView.ViewHolder(itemView)
