@@ -31,22 +31,18 @@
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Sport" />
+                    android:text="AllNews" />
 
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Gaming" />
+                    android:text="Sport" />
 
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Politics" />
 
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Education" />
             </com.google.android.material.tabs.TabLayout>
 
             <androidx.recyclerview.widget.RecyclerView

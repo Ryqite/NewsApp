@@ -7,6 +7,7 @@ import com.example.modsen.DataLayer.Article
 import com.example.modsen.DataLayer.Resource
 import com.example.modsen.DataLayer.newsResponse
 import com.example.modsen.DomainLayer.NewsRepository
+import com.example.modsen.PresentationLayer.MainPageFragment.Companion.category
 import kotlinx.coroutines.launch
 
 class NewsViewModel(val newsRepository: NewsRepository): ViewModel() {
@@ -15,11 +16,19 @@ class NewsViewModel(val newsRepository: NewsRepository): ViewModel() {
     init {
         getAllNews("us")
     }
+    val sportNews: MutableLiveData<Resource<newsResponse>> = MutableLiveData()
+    init {
+        getSportNews("us", category)
+    }
     fun getAllNews(countryCode: String) = viewModelScope.launch{
 
         val response= newsRepository.getNews(countryCode,allNewPage)
         allNews.postValue(handldeAllNewsResponse(response))
+    }
+    fun getSportNews(countryCode: String,category: String) = viewModelScope.launch{
 
+        val response= newsRepository.getSport(countryCode,allNewPage,category)
+        sportNews.postValue(handldeAllNewsResponse(response))
     }
     private fun handldeAllNewsResponse(response: retrofit2.Response<newsResponse>): Resource<newsResponse>{
         if(response.isSuccessful){
