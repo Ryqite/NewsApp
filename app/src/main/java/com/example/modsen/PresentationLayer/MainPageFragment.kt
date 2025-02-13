@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.modsen.DataLayer.Constants.Companion.countryCode
 import com.example.modsen.DataLayer.Resource
 import com.example.modsen.DomainLayer.Adapters.NewsAdapter
 import com.example.modsen.DomainLayer.ViewModel.NewsViewModel
@@ -19,9 +20,6 @@ import com.example.modsen.databinding.FragmentMainPageBinding
 import com.google.android.material.tabs.TabLayout
 
 class MainPageFragment : Fragment(R.layout.fragment_main_page) {
-    companion object {
-    var category: String="sports"
-    }
     lateinit var binding: FragmentMainPageBinding
     lateinit var newsAdapter: NewsAdapter
     var _category: String=""
@@ -89,6 +87,7 @@ class MainPageFragment : Fragment(R.layout.fragment_main_page) {
             binding.bottommenu.setupWithNavController(controller)
         }
     fun allNews(){
+        viewModel.getAllNews(countryCode)
         viewModel.allNews.observe(viewLifecycleOwner, Observer { response ->
             when (response) {
                 is Resource.Success -> {
@@ -106,7 +105,7 @@ class MainPageFragment : Fragment(R.layout.fragment_main_page) {
         })
     }
     fun categoryNews(){
-        category=_category
+        viewModel.getCategoryNews(countryCode,_category)
         viewModel.categoryNews.observe(viewLifecycleOwner, Observer { response ->
             when (response) {
                 is Resource.Success -> {

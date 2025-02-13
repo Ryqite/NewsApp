@@ -7,21 +7,12 @@ import com.example.modsen.DataLayer.Article
 import com.example.modsen.DataLayer.Resource
 import com.example.modsen.DataLayer.newsResponse
 import com.example.modsen.DomainLayer.NewsRepository
-import com.example.modsen.PresentationLayer.MainPageFragment.Companion.category
 import kotlinx.coroutines.launch
 
 class NewsViewModel(val newsRepository: NewsRepository): ViewModel() {
     val allNewPage = 1
-    val allNews: MutableLiveData<Resource<newsResponse>> by lazy {
-        MutableLiveData<Resource<newsResponse>>().also {
-            getAllNews("us")
-        }
-    }
-    val categoryNews: MutableLiveData<Resource<newsResponse>> by lazy {
-        MutableLiveData<Resource<newsResponse>>().also{
-            getCategoryNews("us", category)
-        }
-    }
+    val allNews: MutableLiveData<Resource<newsResponse>> = MutableLiveData()
+    val categoryNews: MutableLiveData<Resource<newsResponse>> = MutableLiveData()
     fun getAllNews(countryCode: String) = viewModelScope.launch{
 
         val response= newsRepository.getNews(countryCode,allNewPage)
