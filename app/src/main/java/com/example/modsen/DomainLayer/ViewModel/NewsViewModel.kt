@@ -11,24 +11,26 @@ import com.example.modsen.PresentationLayer.MainPageFragment.Companion.category
 import kotlinx.coroutines.launch
 
 class NewsViewModel(val newsRepository: NewsRepository): ViewModel() {
-    val allNews: MutableLiveData<Resource<newsResponse>> = MutableLiveData()
     val allNewPage = 1
-    init {
-        getAllNews("us")
+    val allNews: MutableLiveData<Resource<newsResponse>> by lazy {
+        MutableLiveData<Resource<newsResponse>>().also {
+            getAllNews("us")
+        }
     }
-    val sportNews: MutableLiveData<Resource<newsResponse>> = MutableLiveData()
-    init {
-        getSportNews("us", category)
+    val categoryNews: MutableLiveData<Resource<newsResponse>> by lazy {
+        MutableLiveData<Resource<newsResponse>>().also{
+            getCategoryNews("us", category)
+        }
     }
     fun getAllNews(countryCode: String) = viewModelScope.launch{
 
         val response= newsRepository.getNews(countryCode,allNewPage)
         allNews.postValue(handldeAllNewsResponse(response))
     }
-    fun getSportNews(countryCode: String,category: String) = viewModelScope.launch{
+    fun getCategoryNews(countryCode: String,category: String) = viewModelScope.launch{
 
         val response= newsRepository.getSport(countryCode,allNewPage,category)
-        sportNews.postValue(handldeAllNewsResponse(response))
+        categoryNews.postValue(handldeAllNewsResponse(response))
     }
     private fun handldeAllNewsResponse(response: retrofit2.Response<newsResponse>): Resource<newsResponse>{
         if(response.isSuccessful){

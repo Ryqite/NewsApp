@@ -24,6 +24,7 @@ class MainPageFragment : Fragment(R.layout.fragment_main_page) {
     }
     lateinit var binding: FragmentMainPageBinding
     lateinit var newsAdapter: NewsAdapter
+    var _category: String=""
     private val viewModel: NewsViewModel by activityViewModels()
     val TAG = "MainPageFragment"
     override fun onCreateView(
@@ -46,34 +47,20 @@ class MainPageFragment : Fragment(R.layout.fragment_main_page) {
                 R.id.action_mainPageFragment_to_detailPageFragment,bundle
             )
         }
+        allNews()
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 tab?.let {
-                    val _category=when(it.position){
+                    _category=when(it.position){
                         1 -> "sports"
-                        2 -> "politics"
-                        else -> null
+                        2 -> "health"
+                        else -> "all"
                     }
-                    if(_category!=null){
-                        category=_category
-                        viewModel.sportNews.observe(viewLifecycleOwner, Observer { response ->
-                            when (response) {
-                                is Resource.Success -> {
-                                    response.data?.let { newsResponse ->
-                                        newsAdapter.differ.submitList(newsResponse.articles)
-                                    }
-                                }
-                                is Resource.Failure -> {
-                                    response.message?.let { message ->
-                                        Log.e(TAG, "Error: Failure")
-                                    }
-                                }
-                                else -> {}
-                            }
-                        })
+                    if(_category!="all"){
+                        categoryNews()
                     }
                     else{
-                        return
+                        allNews()
                     }
                 }
             }
@@ -81,28 +68,61 @@ class MainPageFragment : Fragment(R.layout.fragment_main_page) {
             override fun onTabUnselected(tab: TabLayout.Tab?) {}
 
             override fun onTabReselected(tab: TabLayout.Tab?) {
-
+                tab?.let {
+                    _category=when(it.position){
+                        1 -> "sports"
+                        2 -> "health"
+                        else -> "all"
+                    }
+                    if(_category!="all"){
+                        categoryNews()
+                    }
+                    else{
+                        allNews()
+                    }
+                }
             }
         })
-            viewModel.allNews.observe(viewLifecycleOwner, Observer { response ->
-                when (response) {
-                    is Resource.Success -> {
-                        response.data?.let { newsResponse ->
-                            newsAdapter.differ.submitList(newsResponse.articles)
-                        }
-                    }
-                    is Resource.Failure -> {
-                        response.message?.let { message ->
-                            Log.e(TAG, "Error: Failure")
-                        }
-                    }
-                    else -> {}
-                }
-            })
+
             val controller = findNavController()
             binding.bottommenu.selectedItemId = R.id.mainPageFragment
             binding.bottommenu.setupWithNavController(controller)
         }
+    fun allNews(){
+        viewModel.allNews.observe(viewLifecycleOwner, Observer { response ->
+            when (response) {
+                is Resource.Success -> {
+                    response.data?.let { newsResponse ->
+                        newsAdapter.differ.submitList(newsResponse.articles)
+                    }
+                }
+                is Resource.Failure -> {
+                    response.message?.let { message ->
+                        Log.e(TAG, "Error: Failure")
+                    }
+                }
+                else -> {}
+            }
+        })
+    }
+    fun categoryNews(){
+        category=_category
+        viewModel.categoryNews.observe(viewLifecycleOwner, Observer { response ->
+            when (response) {
+                is Resource.Success -> {
+                    response.data?.let { newsResponse ->
+                        newsAdapter.differ.submitList(newsResponse.articles)
+                    }
+                }
+                is Resource.Failure -> {
+                    response.message?.let { message ->
+                        Log.e(TAG, "Error: Failure")
+                    }
+                }
+                else -> {}
+            }
+        })
+    }
     private fun setupRecyclerView(){
         newsAdapter = NewsAdapter()
         binding.mainPageRV.apply {

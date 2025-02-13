@@ -8,7 +8,7 @@ class NewsRepository(val db: ArticleDataBase) {
     suspend fun getNews(countryCode: String,pageNumber: Int)=
         RetrofitInstance.api.getBreakingNews(countryCode,pageNumber)
     suspend fun getSport(countryCode: String,pageNumber: Int,category: String)=
-        RetrofitInstance.api.getSportNews(countryCode,pageNumber,category)
+        RetrofitInstance.api.getCategoryNews(countryCode,pageNumber,category)
     suspend fun saveArticle(article: Article)= db.getArticleDao().upsert(article)
     fun getBookmarks()=db.getArticleDao().getAllArticles()
     suspend fun deleteArticle(article: Article)=db.getArticleDao().deleteArticle(article)
