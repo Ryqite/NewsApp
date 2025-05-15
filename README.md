@@ -7,7 +7,7 @@ All work with data was realised by using API and Room.
 --------------------------------------------------------------------------------------
 Used programs/sites: Android Studio + NewsAPI site
 --------------------------------------------------------------------------------------
-Used libraries: Room, Retrofit,Coroutines,Koin and etc.(check gradle for more information)
+Used libraries: Room, Retrofit,Koin and etc.(check gradle for more information)
 --------------------------------------------------------------------------------------
 Screenshots of how app's working and it's design are below.  
 --------------------------------------------------------------------------------------
